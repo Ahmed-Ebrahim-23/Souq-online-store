@@ -2,7 +2,7 @@ package com.example.souq.Service;
 
 import com.example.souq.Model.Entity.ProductManager;
 import com.example.souq.Model.Repo.ProductManagerRepo;
-import com.example.souq.exeption.ProductManagerNotFoundException;
+import com.example.souq.exception.ProductManagerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

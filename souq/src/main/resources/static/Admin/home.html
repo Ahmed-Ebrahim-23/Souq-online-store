@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="assets/img/atm.png">
+    <title>Admin Page</title>
+</head>
+
+<body>
+
+    <!-- start nav  -->
+
+    <nav class="navbar">
+        <div class="container-fluid">
+            <i id="menuBTN" class="fa-solid fa-bars"></i>
+            <span class="mb-0 fs-1">ADMIN</span>
+        </div>
+    </nav>
+
+    <!-- end nav  -->
+
+    <!-- start leftSide -->
+
+    <div class="leftSide" id="leftSide">
+        <ul class="d-flex flex-column ">
+            <li>
+                <button class="btn-primary d-flex" id="DashBoardBTN">DashBoard</button>
+            </li>
+
+            <li>
+                <button class="btn-primary d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+                    href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
+                    Mange Suppliers <i class="fa-solid fa-chevron-down"></i>
+                </button>
+            </li>
+            <div class="collapse" id="collapseExample1">
+                <ul>
+                    <li class="ps-3 " id="createSupplierBTN">Create Supplier</li>
+                    <li class="ps-3 " id="viewSupplierBTN">View Supplier</li>
+                </ul>
+            </div>
+        </ul>
+        <button class="btn btn-danger">Log Out</button>
+    </div>
+
+    <!-- end leftSide -->
+
+    <!-- start dashboard  -->
+
+    <section class="DashBoard screen" id="DashBoard">
+        <div class="container-fluid">
+            <ul>
+                <li>
+                    <h2>Welcome : <span><?php echo $firstname.' '.$lastname ?></span></h2>
+                </li>
+                <li>
+                    <h2>Your Account ID : <span><?php echo $userID ?></span></h2>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- end dashboard  -->
+
+    <!-- start viewSupplier -->
+    <section class="viewSupplier screen d-none" id="viewSupplier">
+        <div class="container-fluid">
+            <h2>View Supplier</h2>
+                <div class="card m-2 p-2">
+                    <div class="card-header">Suppliers</div>
+                    <div class="card-body">
+                        <table class="table" id="supplierTable">
+                            <thead>
+                            <th>id</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th></th>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+                <script>
+
+                </script>
+        </div>
+    </section>
+    <!-- end viewSupplier -->
+
+    <!-- start createSupplier -->
+    <section class="createSupplier screen d-none" id="createSupplier">
+        <div class="container-fluid">
+            <h2>Create Supplier</h2>
+            <form action="#">
+                <div class="form-floating mb-3">
+                    <input type="" class="form-control" id="SupplierName" placeholder="Password">
+                    <label for="SupplierName">Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="SupplierEmail" placeholder="Password">
+                    <label for="SupplierEmail">Email</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="SupplierPassword" placeholder="PIN Code">
+                    <label for="SupplierPassword">Password</label>
+                </div>
+                <div class="d-flex gap-4">
+                    <div class="form-floating w-50 mb-3">
+                        <input type="number" class="form-control" id="apartmentNumber" placeholder="Apartment Number">
+                        <label for="apartmentNumber">Apartment Number</label>
+                    </div>
+                    <div class="form-floating w-50 mb-3">
+                        <input type="text" class="form-control" id="street" placeholder="Street">
+                        <label for="street">Street</label>
+                    </div>
+                </div>
+                <div class="d-flex gap-4">
+                    <div class="form-floating w-50 mb-3">
+                        <input type="text" class="form-control" id="city" placeholder="City">
+                        <label for="city">City</label>
+                    </div>
+                    <div class="form-floating w-50 mb-3">
+                        <input type="text" class="form-control" id="country" placeholder="country">
+                        <label for="country">Country</label>
+                    </div>
+                </div>
+                <div class="d-flex gap-4">
+                    <div class="form-floating w-50 mb-3">
+                        <input type="number" class="form-control" id="SupplierPhone" placeholder="City">
+                        <label for="SupplierPhone">Phone</label>
+                    </div>
+                    <div class="form-floating w-50 mb-3">
+                        <input type="date" class="form-control" id="SupplierBirthdate" placeholder="birthdate">
+                        <label for="SupplierBirthdate">Birth date</label>
+                    </div>
+                </div>
+                <button class="btn btn-success" id = "addSupplierBTN">Add Supplier</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- end createSupplier -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>
+
+<?php
+if($showAlert){
+
+?>
+    <script>
+        const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+        })
+
+        Toast.fire({
+        icon: 'success',
+        title: 'Signed in successfully'
+        })
+    </script>
+    <?php
+     }?>

@@ -1,19 +1,16 @@
 package com.example.souq.Controller;
 
-import com.example.souq.Model.Entity.Product;
 import com.example.souq.Model.Entity.Supplier;
 import com.example.souq.Service.SupplierService;
-import com.example.souq.exeption.SupplierNotFoundException;
-import com.example.souq.exeption.UserNotFoundException;
+import com.example.souq.exception.SupplierNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("supplier")
 public class SupplierController {
 

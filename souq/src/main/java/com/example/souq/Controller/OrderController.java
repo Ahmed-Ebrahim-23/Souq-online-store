@@ -2,8 +2,8 @@ package com.example.souq.Controller;
 
 import com.example.souq.Model.Entity.Order;
 import com.example.souq.Service.OrderService;
-import com.example.souq.exeption.OrderNotFoundException;
-import com.example.souq.exeption.UserNotFoundException;
+import com.example.souq.exception.OrderNotFoundException;
+import com.example.souq.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("order")
 public class OrderController {
     @Autowired

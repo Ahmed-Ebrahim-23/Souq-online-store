@@ -2,7 +2,7 @@ package com.example.souq.Controller;
 
 import com.example.souq.Model.Entity.DeliveryManager;
 import com.example.souq.Service.DeliveryManagerService;
-import com.example.souq.exeption.DeliveryManagerNotFoundException;
+import com.example.souq.exception.DeliveryManagerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("deliveryManager")
 public class DeliveryManagerController {
     @Autowired

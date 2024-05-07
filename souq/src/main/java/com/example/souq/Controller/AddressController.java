@@ -2,21 +2,21 @@ package com.example.souq.Controller;
 
 import com.example.souq.Model.Entity.Address;
 import com.example.souq.Service.AddressService;
-import com.example.souq.exeption.AddressNotFoundException;
+import com.example.souq.exception.AddressNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("address")
 public class AddressController {
     @Autowired
     private AddressService addressService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addAddress(@RequestBody Address address) {
+    public Address addAddress(@RequestBody Address address) {
         return addressService.addAddress(address);
     }
 

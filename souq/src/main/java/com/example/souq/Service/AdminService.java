@@ -2,7 +2,7 @@ package com.example.souq.Service;
 
 import com.example.souq.Model.Entity.Admin;
 import com.example.souq.Model.Repo.AdminRepo;
-import com.example.souq.exeption.AdminNotFoundException;
+import com.example.souq.exception.AdminNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

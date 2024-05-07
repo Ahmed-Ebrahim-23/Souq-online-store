@@ -2,7 +2,7 @@ package com.example.souq.Service;
 
 import com.example.souq.Model.Entity.Address;
 import com.example.souq.Model.Repo.AddressRepo;
-import com.example.souq.exeption.AddressNotFoundException;
+import com.example.souq.exception.AddressNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +21,9 @@ public class AddressService {
     }
 
 
-    public ResponseEntity<String> addAddress(Address address) {
-        addressRepo.save(address);
-        return new ResponseEntity<>("address added", HttpStatus.OK);
+    public Address addAddress(Address address) {
+        Address savedAddress = addressRepo.save(address);
+        return savedAddress;
     }
 
     public void updateAddress(int id, Address updatedAddress) throws AddressNotFoundException {

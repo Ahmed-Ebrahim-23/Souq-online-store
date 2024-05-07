@@ -2,7 +2,7 @@ package com.example.souq.Service;
 
 import com.example.souq.Model.Entity.DeliveryManager;
 import com.example.souq.Model.Repo.DeliveryManagerRepo;
-import com.example.souq.exeption.DeliveryManagerNotFoundException;
+import com.example.souq.exception.DeliveryManagerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
