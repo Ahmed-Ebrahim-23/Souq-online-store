@@ -1,7 +1,10 @@
 package com.example.souq.Controller;
 
+import com.example.souq.Model.Entity.Product;
 import com.example.souq.Model.Entity.Supplier;
 import com.example.souq.Service.SupplierService;
+import com.example.souq.exeption.SupplierNotFoundException;
+import com.example.souq.exeption.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,22 +20,22 @@ public class SupplierController {
         @Autowired
         private SupplierService supplierService;
 
-        @GetMapping("/getallsuppliers")
-        public ArrayList<Supplier> getAllSuppliers() {
+        @GetMapping("/getAll")
+        public List<Supplier> getAllSuppliers() {
                 return supplierService.getAllSuppliers();
         }
 
-        @GetMapping("/getsupplier")
-        public Optional<Supplier> getSupplierById(@RequestParam int id) {
-                return supplierService.getSupplierById(id);
+        @PutMapping("update/{id}")
+        public void updateSupplier(@PathVariable int id, @RequestBody Supplier supplier) throws SupplierNotFoundException {
+                supplierService.updateSupplier(id, supplier);
         }
 
-        @PostMapping("/addsupplier")
+        @PostMapping("/add")
         public ResponseEntity<String> addSupplier(@RequestBody Supplier supplier) {
                 return supplierService.addSupplier(supplier);
         }
 
-        @DeleteMapping("/deletesupplier")
+        @DeleteMapping("/delete/{id}")
         public ResponseEntity<String> deleteSupplierById(@RequestParam int id) {
                 return supplierService.deleteSupplier(id);
         }

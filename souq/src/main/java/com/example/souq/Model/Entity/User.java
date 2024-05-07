@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Builder
 public class User {
     @Id
-            @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     Integer age;
     LocalDate birthdate;
@@ -27,3 +27,15 @@ public class User {
     String email;
     String password;
 }
+//{
+//        "name": "supplier1",
+//        "address": "address1",
+//        "phone": "1234"
+//        "birthdate": "2017-06-15"
+//        "age": 11,
+//        "email": "a@gmail.com"
+//        "password": "1234"
+//        "address": {
+//
+//        }
+//        }

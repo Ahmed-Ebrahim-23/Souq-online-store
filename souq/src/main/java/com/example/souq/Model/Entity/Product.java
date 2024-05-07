@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     private String name;
 
@@ -29,7 +29,7 @@ public class Product {
     @ManyToOne
     private Category category;
 
-    private Integer quantity;
+    private int quantity;
 
     private String image;
 
