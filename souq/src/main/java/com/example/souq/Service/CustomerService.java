@@ -1,8 +1,10 @@
 package com.example.souq.Service;
 
+import com.example.souq.Class.DTO.CustomerDTO;
+import com.example.souq.Model.Entity.Address;
 import com.example.souq.Model.Entity.Customer;
 import com.example.souq.Model.Repo.CustomerRepo;
-import com.example.souq.exception.CustomerNotFoundException;
+import com.example.souq.exeption.CustomerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,20 +17,19 @@ public class CustomerService {
     @Autowired
     private CustomerRepo customerRepo; // Changed from SupplierRepo to CustomerRepo
 
-    public List<Customer> getAllCustomers() {
-        List<Customer> customers = (List<Customer>) customerRepo.findAll();
-        return customers;
+    public List<CustomerDTO> getAllCustomers() {
+        List<Customer> customers = customerRepo.findAll();
+        return CustomerDTO.toCustomerDTOList(customers);
     }
 
-    public ResponseEntity<String> addCustomer(Customer customer) {
-        customerRepo.save(customer);
-        return new ResponseEntity<>("Customer added", HttpStatus.OK);
+    public void addCustomer(CustomerDTO customer) {
+        customerRepo.save(Customer.toCustomer(customer));
     }
 
-    public void updateCustomer(int id, Customer updatedCustomer) throws CustomerNotFoundException {
-        Customer customer = customerRepo.findById(id).orElseThrow(() -> new CustomerNotFoundException());
+    public void updateCustomer(int id, CustomerDTO updatedCustomer) throws CustomerNotFoundException {
+        Customer customer = customerRepo.findById(id).orElseThrow(() -> new CustomerNotFoundException("The address with id: " + id + " is not found"));
 
-        customer.setAddress(updatedCustomer.getAddress());
+        customer.setAddress(Address.toAddress(updatedCustomer.getAddress()));
         customer.setAge(updatedCustomer.getAge());
         customer.setName(updatedCustomer.getName());
         customer.setEmail(updatedCustomer.getEmail());
@@ -40,8 +41,8 @@ public class CustomerService {
         customerRepo.save(customer);
     }
 
-    public ResponseEntity<String> deleteCustomer(int id) {
+    public void deleteCustomer(int id) throws CustomerNotFoundException {
+        Customer customer = customerRepo.findById(id).orElseThrow(() -> new CustomerNotFoundException("The address with id: " + id + " is not found"));
         customerRepo.deleteById(id);
-        return new ResponseEntity<>("Customer deleted", HttpStatus.OK);
     }
 }

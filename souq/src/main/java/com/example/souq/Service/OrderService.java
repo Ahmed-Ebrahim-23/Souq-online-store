@@ -1,14 +1,14 @@
 package com.example.souq.Service;
 
+import com.example.souq.Class.DTO.OrderDTO;
+import com.example.souq.Model.Entity.Customer;
 import com.example.souq.Model.Entity.Order;
 import com.example.souq.Model.Entity.Product;
 import com.example.souq.Model.Repo.OrderRepo;
 import com.example.souq.Model.Repo.ProductRepo;
-import com.example.souq.exception.OrderNotFoundException;
-import com.example.souq.exception.UserNotFoundException;
+import com.example.souq.exeption.OrderNotFoundException;
+import com.example.souq.exeption.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,33 +21,33 @@ public class OrderService {
     @Autowired
     private ProductRepo productRepo;
 
-    public List<Order> getAllOrders() {
+    public List<OrderDTO> getAllOrders() {
         List<Order> orders = orderRepo.findAll();
-        return orders;
+        return OrderDTO.toOrderDTOList(orders);
     }
 
-    public ResponseEntity<String> addOrder(Order order) {
-        orderRepo.save(order);
-        return new ResponseEntity<>("Order added", HttpStatus.OK);
+    public void addOrder(OrderDTO order) {
+        orderRepo.save(Order.toOrder(order));
     }
 
-    public void updateOrder(int id, Order updatedOrder) throws OrderNotFoundException {
-        Order order = orderRepo.findById(id).orElseThrow(() -> new OrderNotFoundException());
+    // curCustomer.id update id (data)
+    public void updateOrder(int id, OrderDTO updatedOrder) throws OrderNotFoundException {
+        Order order = orderRepo.findById(id).orElseThrow(() -> new OrderNotFoundException("The order with id: " + id + " is not found"));
 
         order.setStatus(updatedOrder.getStatus());
-        order.setCustomer(updatedOrder.getCustomer());
+        order.setCustomer(Customer.toCustomer(updatedOrder.getCustomer()));
 
         orderRepo.save(order);
     }
 
-    public ResponseEntity<String> deleteOrder(int id) {
+    public void deleteOrder(int id) throws OrderNotFoundException {
+        Order order = orderRepo.findById(id).orElseThrow(() -> new OrderNotFoundException("The order with id: " + id + " is not found"));
         orderRepo.deleteById(id);
-        return new ResponseEntity<>("Order deleted", HttpStatus.OK);
     }
 
-    public void assignProcutToOrder(int orderId, int productId) throws OrderNotFoundException, UserNotFoundException {
-        Order order = orderRepo.findById(orderId).orElseThrow(() -> new OrderNotFoundException());
-        Product product = productRepo.findById(productId).orElseThrow(() -> new UserNotFoundException());
+    public void assignProductToOrder(int orderId, int productId) throws OrderNotFoundException, ProductNotFoundException {
+        Order order = orderRepo.findById(orderId).orElseThrow(() -> new OrderNotFoundException("The order with id: " + orderId + " is not found"));
+        Product product = productRepo.findById(productId).orElseThrow(() -> new ProductNotFoundException("The product with id: " + productId + " is not found"));
 
         List<Product> products = order.getItems();
         products.add(product);

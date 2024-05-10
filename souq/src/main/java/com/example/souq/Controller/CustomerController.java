@@ -1,9 +1,11 @@
 package com.example.souq.Controller;
 
 
+import com.example.souq.Class.DTO.CustomerDTO;
 import com.example.souq.Model.Entity.Customer;
 import com.example.souq.Service.CustomerService;
-import com.example.souq.exception.CustomerNotFoundException;
+import com.example.souq.exeption.CustomerNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,29 +13,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("customer")
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
     @GetMapping("/getAll")
-    public List<Customer> getAllCustomers() {
+    public List<CustomerDTO> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
     @PutMapping("update/{id}")
-    public void updateCustomer(@PathVariable int id, @RequestBody Customer customer) throws CustomerNotFoundException {
+    public void updateCustomer(@PathVariable int id, @RequestBody @Valid CustomerDTO customer) throws CustomerNotFoundException {
         customerService.updateCustomer(id, customer);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addCustomer(@RequestBody Customer customer) {
-        return customerService.addCustomer(customer);
+    public void addCustomer(@RequestBody @Valid CustomerDTO customer) {
+        customerService.addCustomer(customer);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteCustomerById(@RequestParam int id) {
-        return customerService.deleteCustomer(id);
+    public void deleteCustomerById(@RequestParam int id) throws CustomerNotFoundException {
+        customerService.deleteCustomer(id);
     }
 }

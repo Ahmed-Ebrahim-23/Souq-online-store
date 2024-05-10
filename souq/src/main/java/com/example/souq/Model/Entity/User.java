@@ -13,19 +13,18 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-    Integer age;
-    LocalDate birthdate;
-    String name;
-    String phone;
+    private Integer id;
+    private Integer age;
+    private LocalDate birthdate;
+    private String name;
+    private String phone;
     @OneToOne
-    Address address;
-    String email;
-    String password;
+    private Address address;
+    private String email;
+    private String password;
 }
 //{
 //        "name": "supplier1",

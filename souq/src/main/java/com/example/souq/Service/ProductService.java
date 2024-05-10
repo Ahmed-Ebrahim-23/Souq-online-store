@@ -1,10 +1,10 @@
 package com.example.souq.Service;
 
-import com.example.souq.Model.Entity.Product;
+import com.example.souq.Class.DTO.ProductDTO;
+import com.example.souq.Model.Entity.*;
 import com.example.souq.Model.Repo.ProductRepo;
+import com.example.souq.exeption.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 //import java.util.Optional;
 
@@ -17,24 +17,33 @@ public class ProductService {
     private ProductRepo productRepo;
 
 
-    public List<Product> getAllProducts() {
+    public List<ProductDTO> getAllProducts() {
         List<Product> products = productRepo.findAll();
-        return products;
+        return ProductDTO.toProductDTOList(products);
     }
 
 
-    public ResponseEntity<String> addProduct(Product product) {
+    public void addProduct(ProductDTO product) {
+        productRepo.save(Product.toProduct(product));
+    }
+
+    public void updateProduct(int id, ProductDTO updatedProduct) throws ProductNotFoundException {
+        Product product = productRepo.findById(id).orElseThrow(() -> new ProductNotFoundException("The product with id: " + id + " is not found"));
+
+        product.setSupplier(Supplier.toSupplier(updatedProduct.getSupplier()));
+        product.setImage(updatedProduct.getImage());
+        product.setPrice(updatedProduct.getPrice());
+        product.setDescription(updatedProduct.getDescription());
+        product.setCategory(Category.toCategory(updatedProduct.getCategory()));
+        product.setName(updatedProduct.getName());
+        product.setQuantity(updatedProduct.getQuantity());
+
         productRepo.save(product);
-        return new ResponseEntity<>("product added", HttpStatus.OK);
     }
 
-    public void updateProduct(int id, Product product) {
-        productRepo.save(product);
-    }
-
-    public ResponseEntity<String> deleteProduct(int id) {
+    public void deleteProduct(int id) throws ProductNotFoundException {
+        Product product = productRepo.findById(id).orElseThrow(() -> new ProductNotFoundException("The product with id: " + id + " is not found"));
         productRepo.deleteById(id);
-        return new ResponseEntity<>("product deleted" , HttpStatus.OK);
     }
 
 }

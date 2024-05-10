@@ -1,8 +1,10 @@
 package com.example.souq.Service;
 
+import com.example.souq.Class.DTO.AdminDTO;
+import com.example.souq.Model.Entity.Address;
 import com.example.souq.Model.Entity.Admin;
 import com.example.souq.Model.Repo.AdminRepo;
-import com.example.souq.exception.AdminNotFoundException;
+import com.example.souq.exeption.AdminNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,33 +17,33 @@ public class AdminService {
     @Autowired
     private AdminRepo adminRepo;
 
-    public List<Admin> getAllAdmins() {
+    public List<AdminDTO> getAllAdmins() {
         List<Admin> admins = adminRepo.findAll();
-        return admins;
+        return AdminDTO.toAdminDTOList(admins);
     }
 
-    public ResponseEntity<String> addAdmin(Admin admin) {
+    public Admin addAdmin(AdminDTO adminDTO) {
+        return adminRepo.save(Admin.toAdmin(adminDTO));
+    }
+
+    public void updateAdmin(int id, AdminDTO updatedAdmin) throws AdminNotFoundException {
+        Admin admin = adminRepo.findById(id).orElseThrow(() -> new AdminNotFoundException("The admin with id: " + id + " is not found"));
+
+        admin.setAddress(Address.toAddress(updatedAdmin.getAddress()));
+        admin.setAge(updatedAdmin.getAge());
+        admin.setName(updatedAdmin.getName());
+        admin.setEmail(updatedAdmin.getEmail());
+        admin.setBirthdate(updatedAdmin.getBirthdate());
+        admin.setPhone(updatedAdmin.getPhone());
+        admin.setPassword(updatedAdmin.getPassword());
+        admin.setRole(updatedAdmin.getRole());
+
         adminRepo.save(admin);
-        return new ResponseEntity<>("admin added", HttpStatus.OK);
-    }
-
-    public void updateAdmin(int id, Admin updatedadmin) throws AdminNotFoundException {
-        Admin admin = adminRepo.findById(id).orElseThrow(() -> new AdminNotFoundException());
-
-        admin.setAddress(updatedadmin.getAddress());
-        admin.setAge(updatedadmin.getAge());
-        admin.setName(updatedadmin.getName());
-        admin.setEmail(updatedadmin.getEmail());
-        admin.setBirthdate(updatedadmin.getBirthdate());
-        admin.setPhone(updatedadmin.getPhone());
-        admin.setPassword(updatedadmin.getPassword());
-
-        adminRepo.save(admin);
     }
 
 
-    public ResponseEntity<String> deleteAdmin(int id) {
+    public void deleteAdmin(int id) throws AdminNotFoundException {
+        Admin admin = adminRepo.findById(id).orElseThrow(() -> new AdminNotFoundException("The admin with id: " + id + " is not found"));
         adminRepo.deleteById(id);
-        return new ResponseEntity<>("admin deleted" , HttpStatus.OK);
     }
 }

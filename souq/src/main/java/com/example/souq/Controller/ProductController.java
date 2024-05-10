@@ -1,16 +1,15 @@
 package com.example.souq.Controller;
 
-import com.example.souq.Model.Entity.Product;
+import com.example.souq.Class.DTO.ProductDTO;
 import com.example.souq.Service.ProductService;
-import com.example.souq.exception.UserNotFoundException;
+import com.example.souq.exeption.ProductNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("product")
 public class ProductController {
 
@@ -18,22 +17,22 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addProduct(@RequestBody Product product) {
-        return productService.addProduct(product);
+    public void addProduct(@RequestBody @Valid ProductDTO product) {
+        productService.addProduct(product);
     }
 
     @GetMapping("/getAll")
-    public List<Product> getAllProducts() {
+    public List<ProductDTO> getAllProducts() {
         return productService.getAllProducts();
     }
 
     @PutMapping("update/{id}")
-    public void updateProduct(@PathVariable int id, @RequestBody Product product) throws UserNotFoundException {
+    public void updateProduct(@PathVariable int id, @RequestBody @Valid ProductDTO product) throws ProductNotFoundException {
         productService.updateProduct(id, product);
     }
 
     @DeleteMapping("delete/{id}")
-    public void deleteProduct(@PathVariable int id) {
+    public void deleteProduct(@PathVariable int id) throws ProductNotFoundException {
         productService.deleteProduct(id);
     }
 

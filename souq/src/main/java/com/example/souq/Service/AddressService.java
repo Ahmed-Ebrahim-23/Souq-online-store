@@ -1,33 +1,35 @@
 package com.example.souq.Service;
 
+import com.example.souq.Class.DTO.AddressDTO;
 import com.example.souq.Model.Entity.Address;
 import com.example.souq.Model.Repo.AddressRepo;
-import com.example.souq.exception.AddressNotFoundException;
+import com.example.souq.exeption.AddressNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AddressService {
-    @Autowired
+    @Autowired()
     private AddressRepo addressRepo;
 
-    public List<Address> getAllAddresses() {
+    public List<AddressDTO> getAllAddresses() {
         List<Address> addresses = addressRepo.findAll();
-        return addresses;
+
+        return AddressDTO.toAddressDTOList(addresses);
     }
 
 
-    public Address addAddress(Address address) {
-        Address savedAddress = addressRepo.save(address);
-        return savedAddress;
+    public void addAddress(AddressDTO addressDTO) {
+        addressRepo.save(Address.toAddress(addressDTO));
     }
 
-    public void updateAddress(int id, Address updatedAddress) throws AddressNotFoundException {
-        Address address = addressRepo.findById(id).orElseThrow(() -> new AddressNotFoundException());
+    public void updateAddress(int id, AddressDTO updatedAddress) throws AddressNotFoundException {
+        Address address = addressRepo.findById(id).orElseThrow(() -> new AddressNotFoundException("The address with id: " + id + " is not found"));
 
         address.setCity(updatedAddress.getCity());
         address.setCountry(updatedAddress.getCountry());
@@ -37,8 +39,8 @@ public class AddressService {
         addressRepo.save(address);
     }
 
-    public ResponseEntity<String> deleteAddress(int id) {
+    public void deleteAddress(int id) throws AddressNotFoundException {
+        Address address = addressRepo.findById(id).orElseThrow(() -> new AddressNotFoundException("The address with id: " + id + " is not found"));
         addressRepo.deleteById(id);
-        return new ResponseEntity<>("address deleted" , HttpStatus.OK);
     }
 }
